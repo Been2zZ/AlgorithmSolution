@@ -52,11 +52,12 @@ public class b_9205_맥주마시면서걸어가기 {
 
                     if (dist(src, dest) <= 1000) {
                         map[i][j] = true;
-                        map[j][i] = true;
+                        map[j][i] = true;               // 플로이드 와샬 사용할 경우 주석 처리
                     }
                 }
             }
 
+            /** BFS */
             bfs();
 
             if (visited[n + 1])
@@ -64,9 +65,27 @@ public class b_9205_맥주마시면서걸어가기 {
             else
                 System.out.println("sad");
 
+            /** 플로이드 와샬 */
+//            sol();
+//
+//            if (map[0][n + 1])
+//                System.out.println("happy");
+//            else
+//                System.out.println("sad");
+
         }   // tc for loop end
     }
 
+    /** 플로이드 와샬 */
+    private static void sol() {
+        for (int i = 0; i < n + 2; i++)
+            for (int j = 0; j < n + 2; j++)
+                for (int k = 0; k < n + 2; k++)
+                    if (map[j][i] && map[i][k])
+                        map[j][k] = true;
+    }
+
+    /** BFS */
     private static void bfs() {
         Queue<Integer> q = new LinkedList<>();
         q.add(0);
