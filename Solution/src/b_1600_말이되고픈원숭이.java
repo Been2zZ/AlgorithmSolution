@@ -33,6 +33,13 @@ public class b_1600_말이되고픈원숭이 {
     }
 
     private static int bfs(int sx, int sy) {
+        /**
+         * 아직 미완료 !!!
+         */
+
+        /**
+         * DP 3차원 배열
+         */
         Queue<Monkey> q = new LinkedList<>();
         boolean[][] visited = new boolean[H][W];
 
