@@ -11,12 +11,13 @@ import java.util.StringTokenizer;
 public class b_1600_말이되고픈원숭이 {
     static int K, W, H;
     static int[][] map;
+    static boolean[][][] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
-        K = Integer.parseInt(st.nextToken());       // 원숭이 동작 횟수
+        K = Integer.parseInt(st.nextToken());       // 원숭이 말 이동 가능 횟수
 
         st = new StringTokenizer(br.readLine(), " ");
         W = Integer.parseInt(st.nextToken());       // 가로 길이 : 열
@@ -28,55 +29,53 @@ public class b_1600_말이되고픈원숭이 {
             for (int j = 0; j < W; j++)
                 map[i][j] = Integer.parseInt(st.nextToken());
         }
+        visited = new boolean[H][W][K + 1];
 
         System.out.println(bfs(0, 0));
+
     }
 
+    /**
+     * (sx, sy) -> (dx, dy) 최단거리 구하기
+     * @param sx
+     * @param sy
+     * @return
+     */
     private static int bfs(int sx, int sy) {
-        /**
-         * 아직 미완료 !!!
-         */
-
-        /**
-         * DP 3차원 배열
-         */
         Queue<Monkey> q = new LinkedList<>();
-        boolean[][] visited = new boolean[H][W];
 
-        q.add(new Monkey(sx, sy, 0, 0));
-        visited[sx][sy] = true;
+        q.add(new Monkey(sx, sy, K, 0));
+        visited[sx][sy][K] = true;
 
         while (!q.isEmpty()) {
             Monkey currMonkey = q.poll();
 
-            print(visited);
-
             if (currMonkey.x == H - 1 && currMonkey.y == W - 1)
                 return currMonkey.totalMoveCnt;
 
-            if (currMonkey.horseMoveCnt < K) {
+            for (int d = 0; d < 4; d++) {
+                // 원숭이의 이동 방법
+                int nx = currMonkey.x + mx[d];
+                int ny = currMonkey.y + my[d];
+                int nk = currMonkey.k;
+
+                if (checked(nx, ny) && !visited[nx][ny][nk] && map[nx][ny] == 0) {
+                    q.add(new Monkey(nx, ny, nk, currMonkey.totalMoveCnt + 1));
+                    visited[nx][ny][nk] = true;
+                }
+            }
+
+            if (currMonkey.k > 0) {
                 // 말의 이동 방법
                 for (int d = 0; d < 8; d++) {
                     int nx = currMonkey.x + hx[d];
                     int ny = currMonkey.y + hy[d];
+                    int nk = currMonkey.k - 1;
 
-                    if (!checked(nx, ny) || visited[nx][ny])
-                        continue;
-
-                    q.add(new Monkey(nx, ny, currMonkey.horseMoveCnt + 1, currMonkey.totalMoveCnt + 1));
-                    visited[nx][ny] = true;
-                }
-            } else {
-                // 원숭이의 이동 방법
-                for (int d = 0; d < 4; d++) {
-                    int nx = currMonkey.x + mx[d];
-                    int ny = currMonkey.y + my[d];
-
-                    if (!checked(nx, ny) || visited[nx][ny])
-                        continue;
-
-                    q.add(new Monkey(nx, ny, currMonkey.horseMoveCnt, currMonkey.totalMoveCnt + 1));
-                    visited[nx][ny] = true;
+                    if (checked(nx, ny) && !visited[nx][ny][nk] && map[nx][ny] == 0) {
+                        q.add(new Monkey(nx, ny, nk, currMonkey.totalMoveCnt + 1));
+                        visited[nx][ny][nk] = true;
+                    }
                 }
             }
         }
@@ -84,24 +83,15 @@ public class b_1600_말이되고픈원숭이 {
         return -1;
     }
 
-    private static void print(boolean[][] visited) {
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < W; j++) {
-                if (visited[i][j])
-                    System.out.print("* ");
-                else
-                    System.out.print("F ");
-            }
-            System.out.println();
-        }
-        System.out.println("=======");
-    }
-
-    /** 말의 이동 방법 */
+    /**
+     * 말의 이동 방법
+     */
     static int[] hx = {-1, -2, -2, -1, 1, 2, 2, 1};
     static int[] hy = {-2, -1, 1, 2, -2, -1, 1, 2};
 
-    /** 원숭이의 이동 방법 */
+    /**
+     * 원숭이의 이동 방법
+     */
     static int[] mx = {0, 0, -1, 1};
     static int[] my = {-1, 1, 0, 0};
 
@@ -112,13 +102,13 @@ public class b_1600_말이되고픈원숭이 {
     private static class Monkey {
         int x;
         int y;
-        int horseMoveCnt;
+        int k;
         int totalMoveCnt;
 
-        public Monkey(int x, int y, int horseMoveCnt, int totalMoveCnt) {
+        public Monkey(int x, int y, int k, int totalMoveCnt) {
             this.x = x;
             this.y = y;
-            this.horseMoveCnt = horseMoveCnt;
+            this.k = k;
             this.totalMoveCnt = totalMoveCnt;
         }
     }
