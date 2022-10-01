@@ -101,17 +101,17 @@ public class b_11559_PuyoPuyo {
         }
 
         if (result < 4) {
-            for (int i = 0; i < list.size(); i++) {
-                int x = list.get(i).x;
-                int y = list.get(i).y;
+            for (Point point : list) {
+                int x = point.x;
+                int y = point.y;
 
                 map[x][y] = color;
                 visited[x][y] = INF;
             }
         } else {
-            for (int i = 0; i < list.size(); i++) {
-                int x = list.get(i).x;
-                int y = list.get(i).y;
+            for (Point point : list) {
+                int x = point.x;
+                int y = point.y;
 
                 map[x][y] = 0;
             }
@@ -121,20 +121,20 @@ public class b_11559_PuyoPuyo {
     }
 
     private static void pop() {
-        /** 터짐 */
-        for (int i = 0; i < popList.size(); i++) {
-            int y = popList.get(i).y;
+        // 터짐
+        for (Point point : popList) {
+            int y = point.y;
 
-            String str = "";
+            StringBuilder str = new StringBuilder();
             for (int j = 0; j < N; j++)
                 if (map[j][y] > 0)
-                    str += map[j][y];
+                    str.append(map[j][y]);
 
-                if (str != "") {
-                    str = String.format("%012d", Long.parseLong(str));
-                    for (int j = 0; j < N; j++)
-                        map[j][y] = str.charAt(j) - '0';
-                }
+            if (!str.toString().equals("")) {
+                str = new StringBuilder(String.format("%012d", Long.parseLong(str.toString())));
+                for (int j = 0; j < N; j++)
+                    map[j][y] = str.charAt(j) - '0';
+            }
 
         }
     }
