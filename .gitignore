@@ -423,3 +423,4 @@ Thumbs.db
 # End of https://www.toptal.com/developers/gitignore/api/macos,java,intellij
 /.idea/git_toolbox_prj.xml
 /.idea/saveactions_settings.xml
+/Solution_Programmers/src/Solution.java
