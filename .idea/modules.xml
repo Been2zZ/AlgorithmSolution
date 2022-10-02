@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/AlgorithmSolution.iml" filepath="$PROJECT_DIR$/.idea/AlgorithmSolution.iml" />
       <module fileurl="file://$PROJECT_DIR$/Solution_BOJ/Solution_BOJ.iml" filepath="$PROJECT_DIR$/Solution_BOJ/Solution_BOJ.iml" />
       <module fileurl="file://$PROJECT_DIR$/Solution_JAVA/Solution_JAVA.iml" filepath="$PROJECT_DIR$/Solution_JAVA/Solution_JAVA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Solution_Programmers/Solution_Programmers.iml" filepath="$PROJECT_DIR$/Solution_Programmers/Solution_Programmers.iml" />
     </modules>
   </component>
 </project>
