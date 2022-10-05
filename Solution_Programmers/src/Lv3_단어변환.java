@@ -15,6 +15,7 @@ public class Lv3_단어변환 {
         boolean[] visited;
 
         public int solution(String begin, String target, String[] words) {
+
             /**
              * 1. 한 번에 한 개의 알파벳만 바꿀 수 있습니다.
              * 2. words에 있는 단어로만 변환할 수 있습니다.
